@@ -1,63 +1,54 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <windows.h>
+#include <vector>
+#include "enemy.h"
+#include "level.h"
 
 //textures
-sf::Texture textureAvain("textures/avain.png");
+//sf::Texture textureAvain("textures/avain.png");
 sf::Texture texturePelaaja("textures/pelaaja.png");
 sf::Texture texturePalikka("textures/palikka.png");
+sf::Texture textureEnemy("textures/hirvio.png");
 
 //sprites
-sf::Sprite spriteAvain(textureAvain);
+//sf::Sprite spriteAvain(textureAvain);
 
 sf::Sprite spritePelaaja(texturePelaaja);
 
-sf::Sprite spritePalikkat[900];
+std::vector<sf::Sprite*> spritePalikkat;
+std::vector<Enemy*> enemies;
+std::vector<sf::Sprite*> spriteEnemies;
 
 //settings
 float playerSpeed = 1;
-int testLevel[] = {
-    1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1,
-    1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1,
-};
 
 //gamestate
 float playerXPosition;
 float playerYPosition;
 
+void SpawnEnemy() {
+    Enemy* enemy = new Enemy();
+    enemies.push_back(enemy);
+    enemy->xPosition = 18*32;
+    enemy->yPosition = 1*32;
+
+    sf::Sprite* sprite = new sf::Sprite(textureEnemy);
+    spriteEnemies.push_back(sprite);
+
+    enemy->spawned = true;
+}
+
+bool IsBlocked(int x, int y) {
+    
+    int i = x + y * 20;
+    if (level[i] == 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 void MovePlayer() {
 
@@ -82,33 +73,37 @@ void MovePlayer() {
         horizontalInput -= 1.0 * playerSpeed;
     }
 
-    //todo collision check
-    std::cout << horizontalInput << "\n";
-    std::cout << verticalInput << "\n";
+    float newPlayerX = (playerXPosition + horizontalInput)/32;
+    float newPlayerY = (playerYPosition + verticalInput)/32;
 
-    playerXPosition = playerXPosition + horizontalInput;
-    playerYPosition = playerYPosition + verticalInput;
+    if (!IsBlocked(static_cast<int>(round(newPlayerX)), static_cast<int>(round(newPlayerY)))) {
+        playerXPosition = playerXPosition + horizontalInput;
+        playerYPosition = playerYPosition + verticalInput;
+
+    }
+    
     
 }
 
 void InitializeLevel() {
 
     int i = 0;
-    for (size_t y = 0; y < 30; y++)
+    for (size_t y = 0; y < 15; y++)
     {
-        for (size_t x = 0; x < 30; x++)
+        for (size_t x = 0; x < 20; x++)
         {
-            if (testLevel[i] == 0) {
-                sf::Sprite sprite(texturePalikka);
-                spritePalikkat[i] = sprite;
-                sf::Vector2f blockPosition(x * 32, -y * 32);
-                sprite.setPosition(blockPosition);
+            if (level[i] == 1) {
+                sf::Sprite* sprite = new sf::Sprite(texturePalikka);
+                spritePalikkat.push_back(sprite);
+                sf::Vector2f blockPosition(x * 32, y * 32);
+                sprite->setPosition(blockPosition);
             }
 
-            sf::Vector2f blockPosition(x * 32, -y * 32);
             i++;
         }
     }
+
+    std::cout << "Level initialization done! " << sizeof(spritePalikkat) << "\n";
 }
 
 int main()
@@ -117,6 +112,13 @@ int main()
     auto window = sf::RenderWindow(sf::VideoMode({800u, 600u}), "CMake SFML Project");
     sf::Window* pWindow = &window;
     window.setFramerateLimit(144);
+    
+    InitializeLevel();
+
+    SpawnEnemy();
+
+    playerXPosition = 1*32;
+    playerYPosition = 1*32;
 
     while (window.isOpen())
     {
@@ -132,17 +134,29 @@ int main()
 
         MovePlayer();
 
-        //draw level
-        for (size_t i = 0; i < 900; i++)
+        for (size_t i = 0; i < enemies.size(); i++)
         {
-            window.
+            enemies[i]->Update();
+        }
+
+        //draw level
+        for (size_t i = 0; i < spritePalikkat.size(); i++)
+        {
+            window.draw(*spritePalikkat[i]);
         }
 
         //draw player
         sf::Vector2f playerPosition(playerXPosition, playerYPosition);
         spritePelaaja.setPosition(playerPosition);
         window.draw(spritePelaaja);
-        
+
+        //draw enemies
+        for (size_t i = 0; i < spriteEnemies.size(); i++)
+        {
+            sf::Vector2f position(enemies[i]->xPosition, enemies[i]->yPosition);
+            spriteEnemies[i]->setPosition(position);
+            window.draw(*spriteEnemies[i]);
+        }
 
         window.display();
     }
