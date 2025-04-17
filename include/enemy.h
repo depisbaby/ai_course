@@ -1,5 +1,5 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#pragma once
+#include "level.h"
 int Test();
 
 class Enemy {
@@ -12,12 +12,3 @@ public:
 	bool spawned;
 };
 
-class NavigationNode {
-public:
-	int xPosition;
-	int yPosition;
-	bool open;
-
-};
-
-#endif
