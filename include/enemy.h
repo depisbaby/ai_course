@@ -1,6 +1,5 @@
 #pragma once
 #include "level.h"
-int Test();
 
 class Enemy {
 public:
