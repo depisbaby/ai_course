@@ -20,10 +20,22 @@ int level[] = {
 };
 
 NavigationNode* navNodes[300];
+std::vector<NavigationNode*> openNodes;
 
-std::vector<int[]> GetPath() {
+std::vector<Coordinate> GetPath(Coordinate* start, Coordinate* end) {
+    std::vector<Coordinate> path;
 
+    OpenNode(start->x, start->y);
+
+    while (openNodes.size() > 0) {
+        NavigationNode* node = openNodes[0];// todo heuretic based
+        OpenNeighbors(node->xPosition, node->yPosition);
+        openNodes.
+    }
+
+    return path;
 }
+
 
 void InitalizeNavNodes() {
 	

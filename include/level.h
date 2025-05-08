@@ -10,6 +10,12 @@ public:
 
 };
 
+class Coordinate {
+public:
+	int x;
+	int y;
+};
+
 extern int level[];
 NavigationNode* navNodes[];
 
