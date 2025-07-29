@@ -39,16 +39,6 @@ void SpawnEnemy() {
     enemy->spawned = true;
 }
 
-bool IsBlocked(int x, int y) {
-    
-    int i = x + y * 20;
-    if (level[i] == 1) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 
 void MovePlayer() {
 
