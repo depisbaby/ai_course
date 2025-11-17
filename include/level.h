@@ -18,14 +18,12 @@ public:
 };
 
 extern int level[];
+extern int levelHeight;
+extern int levelWidth;
 NavigationNode* navNodes[];
 
 #ifndef METHODS
 #define METHODS
-
-std::vector<int[]> GetAPath(int startX, int startY, int endX, int endY);
-
-void InitializeNavNodes();
 
 void OpenNode(int x, int y);
 
@@ -34,6 +32,11 @@ void OpenNeighbours(int x, int y);
 bool IsBlocked(int x, int y);
 
 NavigationNode* GetNode(int x, int y);
+
+std::vector<Coordinate> GetPath(Coordinate* start, Coordinate* end);
+std::vector<Coordinate> GetRandomPath(Coordinate* start);
+
+void InitializeNavNodes();
 
 #endif
 

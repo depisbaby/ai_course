@@ -31,12 +31,13 @@ void SpawnEnemy() {
     Enemy* enemy = new Enemy();
     enemies.push_back(enemy);
     enemy->xPosition = 18*32;
-    enemy->yPosition = 1*32;
+    enemy->yPosition = 10*32;
 
     sf::Sprite* sprite = new sf::Sprite(textureEnemy);
     spriteEnemies.push_back(sprite);
 
     enemy->spawned = true;
+    enemy->GetNewPath();
 }
 
 
@@ -78,9 +79,9 @@ void MovePlayer() {
 void InitializeLevel() {
 
     int i = 0;
-    for (size_t y = 0; y < 15; y++)
+    for (size_t y = 0; y < levelHeight; y++)
     {
-        for (size_t x = 0; x < 20; x++)
+        for (size_t x = 0; x < levelWidth; x++)
         {
             if (level[i] == 1) {
                 sf::Sprite* sprite = new sf::Sprite(texturePalikka);
@@ -104,11 +105,25 @@ int main()
     window.setFramerateLimit(144);
     
     InitializeLevel();
-
+    InitializeNavNodes();
     SpawnEnemy();
 
     playerXPosition = 1*32;
     playerYPosition = 1*32;
+
+    /*Coordinate start;
+    start.x = 1;
+    start.y = 1;
+    Coordinate end;
+    end.x = 18;
+    end.y = 13;
+
+    std::vector<Coordinate> path = GetPath(&start, &end);
+
+    for each(Coordinate var in path)
+    {
+        std::cout << var.x << ", " << var.y << "\n";
+    }*/
 
     while (window.isOpen())
     {
